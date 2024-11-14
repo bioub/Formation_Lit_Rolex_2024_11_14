@@ -1,6 +1,7 @@
 import '../components/users-filter.js';
 
 import { LitElement, css, html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { di } from '../di';
 
@@ -37,9 +38,7 @@ export class UsersComponent extends LitElement {
       <div class="left">
         <my-users-filter></my-users-filter>
         <nav>
-          <a class="active" href="#"> Toto </a>
-          <a href="#"> Titi </a>
-          <a href="#"> Tata </a>
+          ${this.users.map((u) => html`<a class=${classMap({active: u.id % 2 === 0})} href="#">${u.name}</a>`)}
         </nav>
       </div>
       <div class="right">
@@ -63,7 +62,7 @@ export class UsersComponent extends LitElement {
     }
 
     .left a.active {
-      background-color: lightblue;
+      background-color: var(--my-bg-color, lightblue);
     }
   `;
 }
