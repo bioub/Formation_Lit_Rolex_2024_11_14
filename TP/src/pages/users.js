@@ -2,6 +2,7 @@ import '../components/users-filter.js';
 
 import { LitElement, css, html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 
 import { di } from '../di';
 
@@ -38,9 +39,13 @@ export class UsersComponent extends LitElement {
       <div class="left">
         <my-users-filter filter=${this.searchTerm} @filter-changed=${this.handleFilterChanged}></my-users-filter>
         <nav>
-          ${this.users
-            .filter((u) => u.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
-            .map((u) => html`<a class=${classMap({active: u.id % 2 === 0})} href="#">${u.name}</a>`)}
+          ${repeat(
+            this.users
+            .filter((u) => u.name.toLowerCase().includes(this.searchTerm.toLowerCase())),
+            (u) => u.id,
+            (u) => html`<a class=${classMap({active: u.id % 2 === 0})} href="#">${u.name}</a>`
+          )}
+          
         </nav>
       </div>
       <div class="right">
