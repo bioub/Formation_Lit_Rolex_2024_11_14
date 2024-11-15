@@ -20,8 +20,9 @@ export class MyApp extends LitElement {
     this._itemsFromApp = [...this._itemsFromApp, 'New'];
   }
 
+  /** @param {CustomEvent} event */
   updateName(event) {
-    this._nameFromApp = event.detail
+    this._nameFromApp = event.detail;
   }
 
   render() {
