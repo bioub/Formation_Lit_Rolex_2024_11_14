@@ -14,6 +14,30 @@ export class MySelect extends LitElement {
     this.items = ['World', 'Monde', 'Mundo'];
   }
 
+  // ici on utilise la fonction fléchée pour que le this soit bien le this de l'instance de MySelect
+  // parce qu'on écoute via .addEventListener
+  // avec @click ça ne serait pas nécessaire
+  closeMenuWhenClickOutside = (event) => {
+    if (!this.shadowRoot.contains(event.composedPath()[0])) { 
+      this._menuOpen = false;
+    }
+  }
+
+  windowClickController = new WindowClickController(this, this.closeMenuWhenClickOutside);
+
+  // connectedCallback() {
+  //   super.connectedCallback();
+  //   // On pourrait commencer par fermer le menu, pour que le @click s'éxécute en 2e
+  //   // window.addEventListener('click', this.closeMenuWhenClickOutside, { capture: true });
+  //   window.addEventListener('click', this.closeMenuWhenClickOutside);
+  // }
+
+  // disconnectedCallback() {
+  //   super.disconnectedCallback();
+  //   // window.removeEventListener('click', this.closeMenuWhenClickOutside, { capture: true });
+  //   window.addEventListener('click', this.closeMenuWhenClickOutside);
+  // }
+
   openMenu() {
     this._menuOpen = !this._menuOpen;
   }
@@ -25,7 +49,7 @@ export class MySelect extends LitElement {
 
     this.item = event.target.dataset.itemValue;
     this._menuOpen = false;
-    this.dispatchEvent(new CustomEvent('item-updated', { detail: item }));
+    this.dispatchEvent(new CustomEvent('item-updated', { detail: this.item, bubbles: true, composed: true }));
   }
 
   render() {
