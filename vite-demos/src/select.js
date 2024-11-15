@@ -18,8 +18,12 @@ export class MySelect extends LitElement {
     this._menuOpen = !this._menuOpen;
   }
 
-  selectItemAndCloseMenu(item) {
-    this.item = item;
+  selectItemAndCloseMenu(event) {
+    if (!event.target.classList.contains('item')) {
+      return;
+    }
+
+    this.item = event.target.dataset.itemValue;
     this._menuOpen = false;
     this.dispatchEvent(new CustomEvent('item-updated', { detail: item }));
   }
@@ -28,12 +32,12 @@ export class MySelect extends LitElement {
     return html`
       <div class="selected" @click=${this.openMenu}>${this.item}</div>
       ${this._menuOpen
-        ? html`<div class="menu">
+        ? html`<div class="menu" @click=${this.selectItemAndCloseMenu}>
             ${this.items.map(
               (item) =>
                 html`<div
                   class="item"
-                  @click=${() => this.selectItemAndCloseMenu(item)}
+                  data-item-value=${item}
                 >
                   ${item}
                 </div>`,

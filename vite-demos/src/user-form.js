@@ -35,7 +35,7 @@ export class UserFormElement extends LitElement {
 
   render() {
     return html`
-      <form @submit=${this.sendUserToBackend}>
+      <form @submit=${this.sendUserToBackend} >
         <div>
           <label for="name">Name</label>
           <input type="text" id="name" name="name" value=${this.user.name} @input=${this.updateProperty}>
