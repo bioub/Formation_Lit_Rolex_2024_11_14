@@ -2,11 +2,11 @@ import './components/top-bar';
 
 import { LitElement, css, html } from 'lit';
 
-import { providerRouter, routes } from './routes';
+import { provideRouter, routes } from './routes';
 import { provideStore } from './store';
 
 export class AppComponent extends LitElement {
-  router = providerRouter(this, routes);
+  router = provideRouter(this, routes);
   store = provideStore(this);
 
   static styles = css`
@@ -19,7 +19,7 @@ export class AppComponent extends LitElement {
     return html`
       <my-top-bar></my-top-bar>
       <main>
-        <rlx-flx-router-view .router=${this._routerProvider.value}></rlx-flx-router-view>
+        <rlx-flx-router-view .router=${this.router}></rlx-flx-router-view>
       </main>
     `;
   }

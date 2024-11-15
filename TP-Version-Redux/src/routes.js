@@ -9,7 +9,7 @@ import { UsersComponent } from './pages/users.js';
 
 export const routerContext = createContext('router');
 
-export function providerRouter(host, routes) {
+export function provideRouter(host, routes) {
   const router = new Router({
     routes: routes,
     useHistory: true,
